@@ -1,0 +1,1143 @@
+### Microbit 麦克纳姆轮智能小车课程
+
+
+#### 第13课 七彩灯闪烁
+![Img](./media/img-20230426135820.png)
+
+1.实验说明：
+这是一个常用的LED，它是一个七彩LED，它采用7彩自动闪烁LED（外观白色，显示七彩）元件。七色LED模块可自动闪烁内置颜色。可以用来制作相当迷人的灯光效果。这个模块与普通LED驱动相同，当我们给它输入高电平时将自动闪烁七种颜色，而输入低电平时将停止闪烁。
+我们已经将7彩LED集成到电机驱动底板，在这个项目中，我们用两个最基本的实验代码分别来控制这个七彩LED。LED模块信号端S为高电平时七彩LED开始自动闪烁，S为低电平时七彩LED熄灭不再闪烁。
+
+2. 相关知识：                                                          
+![Img](./media/img-20230426143818.png)
+![Img](./media/img-20230426143829.png)
+                  
+两个七彩灯分别通过三极管来控制，信号端分别接到了P5.4和P5.5，所以我们只要控制这两个引脚输出高低电平即可控制两个七彩灯。
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.添加库文件：
+<span style="color: rgb(255, 76, 65);">特别注意：导入库文件前需要给Micro:bit主板上传一个.py的代码（空代码也是可以的），这里我们是以“**第13课：七彩灯闪烁.py**”代码为例。</span>
+<br />
+<br />
+
+导入“**keyes_mecanum_Car_V2.py**”库文件
+
+<br />
+
+Mu保存文件的默认目录是“Mu_code”，它位于用户目录的根目录中。参考文献链接：https://codewith.mu/en/tutorials/1.0/files
+例如，在Windows系统中，假设您的系统安装在电脑C驱动器上，则用户名为“Administrator”，那么“mu_code”目录的路径是“C:\Administrator\mu_ code”。在Linux系统上，“mu_code”目录的路径是“~/home/mu_code”           
+<span style="color: rgb(0, 209, 0);">进入“mu_code”文件夹。</span>
+![Img](./media/img-20230327142740.png)
+我们提供的库文件“keyes_mecanum_Car_V2.py”的路径如下：
+![Img](./media/img-20230427160531.png)
+复制粘贴我们提供的库文件“keyes_mecanum_Car_V2.py”到“mu_code”文件夹中。复制成功后，如下图：
+![Img](./media/img-20230427160707.png)
+先打开Mu软件并连接Micro:bit主板到电脑，接着点击“**刷入**”按钮烧入一个空的程序代码到Micro:bit主板中。
+![Img](./media/img-20230327143130.png)
+然后点击“**文件**”按钮，就可以在“**电脑上的文件**”栏的下面方框中看到对应的库文件，再拖着库文件“keyes_mecanum_Car_V2.py”到Micro:bit主板中。
+![Img](./media/img-20230327143959.png)
+![Img](./media/img-20230427161059.png)
+![Img](./media/img-20230427161951.png)
+![Img](./media/img-20230427162013.png)
+ 
+库文件导入成功后，你点击“**加载**”按钮导入Python教程中第13课文件夹中的程序代码“**第13课：七彩灯闪烁\.py**”,然后单击“**检查**”按钮来检查代码是否有错误。如果一行出现光标或下划线，则表明该行的程序有错误。
+![Img](./media/img-20230427163745.png)
+
+![Img](./media/img-20230427163324.png)
+但是，单击“**检查**”按钮来检查代码是否有错误时，即使代码没有错误时也会出现如下提示语，这提示语只是一些警告语，而不是代码错误提示语。也就是说整个代码是没有错误的。
+![Img](./media/img-20230427163410.png)
+![Img](./media/img-20230427163420.png)
+确定程序代码无误之后，你还需要确定Micro USB线已经将Micro:bit主板连接到电脑，然后单击“**刷入**”按钮将代码下载到Micro:bit主板。
+![Img](./media/img-20230427163544.png)
+如果点击“**刷入**”按钮后程序代码错误或实验现象错误，请确认你是否已经导入好我们提供给Micro:bit主板的库文件“keyes_mecanum_Car_V2.py”。
+
+<span style="color: rgb(255, 76, 65);">特别注意: 
+如果您在micro:bit板上下载了其他程序，但库文件“keyes_mecanum_Car_V2.py”程序除外。在使用Micropython编程之前，您需要将库文件导入到Micro:bit主板。
+如果您始终使用相同的 Micro:bit主板进行Micropython编程，则无需多次将库文件发送到Micro:bit主板；反之，就需要再次将库文件发送到Micro:bit主板。</span> 
+
+5.实验代码：
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+
+mecanumCar = Mecanum_Car_Driver_V2()
+
+while True:
+    mecanumCar.left_led(1)
+    mecanumCar.right_led(1)
+    sleep(3000)
+    mecanumCar.left_led(0)
+    mecanumCar.right_led(0)
+    sleep(3000)
+```
+
+6.实验结果：
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码下载到micro：bit主板。这样，麦克纳姆轮智能车电机驱动底板上的七彩灯闪烁3秒，然后停止闪烁3秒，反复循环。
+![Img](./media/img-20230504104423.png)
+
+7.代码说明：
+|from  microbit  import *| 导入micro：bit的库文件 |
+| :--: | :--: |
+| from keyes_mecanum_Car_V2 import *| 导入 keyes_mecanum_Car_V2的库文件 |
+| mecanumCar = Mecanum_Car_Driver_V2() | 实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar |
+| while True: | 这是一个永久循环，它使micro：bit永远执行这个循环中的代码。 |
+| mecanumCar.left_led(1) | 点亮左边的七彩灯。（1是点亮，0是熄灭） |
+| mecanumCar.right_led(1) | 点亮右边的七彩灯。（1是点亮，0是熄灭） |
+| sleep(3000) | 延时3000毫秒，即3秒 |
+| mecanumCar.left_led(0)| 熄灭左边的七彩灯。（1是点亮，0是熄灭） |
+|mecanumCar.right_led(0)|熄灭右边的七彩灯。（1是点亮，0是熄灭）|
+
+
+
+
+#### 第14课 WS2812RGB
+![Img](./media/img-20230426145214.png)
+
+1.实验说明：                                                                                
+在前一个项目中，我们详细的介绍了通过代码控制七彩LED闪烁。这节课我们使用WS2812灯珠来显示真正的多彩灯，理论上我们可以通过编程实现我们想要显示的任意的颜色。
+但是这个2812 RGB 驱动原理与我们前面学习过的七彩LED不相同，但是也只需要一个引脚就能控制，这是一个集控制电路与发光电路于一体的智能外控LED光源。每个LED原件其外型与一个5050LED灯珠相同，每个元件即为一个像素点，我们这个电机驱动板上有四个灯珠即四个像素。在本项目中我们利用<span style="color: rgb(255, 76, 65);">Micro：bit的P7控制端</span>控制4个WS2812 RGB灯显示不同的状态。
+
+2.元件知识： 
+![Img](./media/img-20230426144639.png)
+这四个像素点灯珠都是串联起来的，其实不论多少个，我们都可以用一个引脚（控制引脚为<span style="color: rgb(255, 76, 65);">micro bit的P7</span>）控制任意一个灯，并且让它显示任一种颜色。像素点内部包含了智能数字接口数据锁存信号整形放大驱动电路，还包含有高精度的内部振荡器和12V高压可编程定电流控制部分，有效保证了像素点光的颜色高度一致。数据协议采用单线归零码的通讯方式，像素点在上电复位以后，S端接受从控制器传输过来的数据，首先送过来的24bit数据被第一个像素点提取后，送到像素点内部的数据锁存器。这个2812RGB通讯协议与驱动已经在底层封装好了，我们直接调用函数的接口就可以使用。
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.实验代码1：                                                                               
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+import neopixel
+np = neopixel.NeoPixel(pin7, 4)
+while True:
+    for pixel_id1 in range(0, len(np)):
+        np[pixel_id1] = (255, 0, 0)
+        np.show()
+    sleep(1000)
+    for pixel_id2 in range(0, len(np)):
+        np[pixel_id2] = (255, 165, 0)
+        np.show()
+    sleep(1000)
+    for pixel_id3 in range(0, len(np)):
+        np[pixel_id3] = (255, 255, 0)
+        np.show()
+    sleep(1000)
+    for pixel_id4 in range(0, len(np)):
+        np[pixel_id4] = (0, 255, 0)
+        np.show()
+    sleep(1000)
+    for pixel_id5 in range(0, len(np)):
+        np[pixel_id5] = (0, 0, 255)
+        np.show()
+    sleep(1000)
+    for pixel_id6 in range(0, len(np)):
+        np[pixel_id6] = (75, 0, 130)
+        np.show()
+    sleep(1000)
+    for pixel_id7 in range(0, len(np)):
+        np[pixel_id7] = (238, 130, 238)
+        np.show()
+    sleep(1000)
+    for pixel_id8 in range(0, len(np)):
+        np[pixel_id8] = (160, 32, 240)
+        np.show()
+    sleep(1000)
+    for pixel_id9 in range(0, len(np)):
+        np[pixel_id9] = (255, 255, 255)
+    sleep(1000)
+
+```
+5.实验结果1：                                                                                
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码1下载到micro：bit主板。这样，micro:bit电机驱动底板上的4个WS2812RGB灯全亮，一种颜色变化，一直循环。
+![Img](./media/img-20230504103911.png)
+
+6.实验代码2：                                                                               
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+import neopixel
+np = neopixel.NeoPixel(pin7, 4)
+while True:
+    for index in range(0, 4):
+        np.clear()
+        np[index] = (255, 0, 0)
+        np.show()
+        sleep(100)
+    for index1 in range(0, 4):
+        np.clear()
+        np[index1] = (255, 165, 0)
+        np.show()
+        sleep(100)
+    for index2 in range(0, 4):
+        np.clear()
+        np[index2] = (255, 255, 0)
+        np.show()
+        sleep(100)
+    for index3 in range(0, 4):
+        np.clear()
+        np[index3] = (0, 255, 0)
+        np.show()
+        sleep(100)
+    for index4 in range(0, 4):
+        np.clear()
+        np[index4] = (0, 0, 255)
+        np.show()
+        sleep(100)
+    for index5 in range(0, 4):
+        np.clear()
+        np[index5] = (75, 0, 130)
+        np.show()
+        sleep(100)
+    for index6 in range(0, 4):
+        np.clear()
+        np[index6] = (238, 130, 238)
+        np.show()
+        sleep(100)
+    for index7 in range(0, 4):
+        np.clear()
+        np[index7] = (160, 32, 240)
+        np.show()
+        sleep(100)
+    for index8 in range(0, 4):
+        np.clear()
+        np[index8] = (255, 255, 255)
+        np.show()
+        sleep(100)
+
+```
+7.实验结果2： 
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码2下载到micro：bit主板。这样，micro:bit电机驱动底板上的4个WS2812RGB灯以流水灯的形式点亮，一直循环。
+![Img](./media/img-20230504103911.png)
+
+8.实验代码3：                                                                               
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+import neopixel
+np = neopixel.NeoPixel(pin7, 4)
+from random import randint
+R = 0
+G = 0
+B = 0
+while True:
+   for index in range(0, 4):
+        R = randint(10, 255)
+        G = randint(10, 255)
+        B = randint(10, 255)
+        np.clear()
+        np[index] = (R, G, B)
+        np.show()
+        sleep(500)
+```
+9.实验结果3： 
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码3下载到micro：bit主板。这样，micro:bit电机驱动底板上的4个WS2812RGB灯以流水灯的形式点亮，每个灯亮起都是一种随机颜色，一直循环。
+
+11.代码说明：
+|from  microbit  import *|导入micro：bit的库文件|
+| :--: | :--: |
+|import  neopixel| 导入neopixel 的库文件 |
+| np = neopixel.NeoPixel(pin7, 4) | 将Neopixel设为引脚P7初始化灯带4颗LED |
+| np.clear() | Neopixel长条上RGB灯都熄灭 |
+| while True: | 这是一个永久循环，它使micro：bit永远执行这个循环中的代码。 |
+| for pixel_id1 in range(0, len(np)): | 对于（0，len（np））范围内的RGB像素为pixel_id1 |
+| for index in range(0, 4): | 对于（0，4）范围内的RGB像素为index |
+| np.show() | 在Neopixel条带上显示当前像素 |
+|np[pixel_id1] = (255, 0, 0) | 将Neopixel条带上RGB灯设置像素pixel_id1亮红色灯 |
+| from random import randint| 从随机变量中导入randint |
+| np[pixel_id] = (R, G, B) | 将Neopixel条带上RGB灯设置像素pixel_id亮彩色灯 |
+| R = 0 | 设置变量R的初始值为0 |
+| R = randint(10, 255) |设置R=randint(10, 255) |
+
+#### 第15课 舵机转动
+
+1.实验说明：                                                                                
+在前面的4WD Microbit麦克纳姆轮智能小车安装步骤文档中，我们已经设置了舵机角度。舵机是一种可以非常精确地旋转的电机。目前已广泛应用于玩具车、遥控直升机、飞机、机器人等领域。在这个项目中，我们将来学习有关舵机转动。
+
+2.元件知识： 
+![Img](./media/img-20230329095649.png)
+**舵机：** 舵机是一种位置伺服的驱动器，主要是由外壳、电路板、无核心马达、齿轮与位置检测器所构成。其工作原理是由接收机或者单片机发出信号给舵机，其内部有一个基准电路，产生周期为20ms，宽度为1.5ms 的基准信号，将获得的直流偏置电压与电位器的电压比较，获得电压差输出。经由电路板上的IC 判断转动方向，再驱动无核心马达开始转动，透过减速齿轮将动力传至摆臂，同时由位置检测器送回信号，判断是否已经到达定位。适用于那些需要角度不断变化并可以保持的控制系统。当电机转速一定时，通过级联减速齿轮带动电位器旋转，使得电压差为0，电机停止转动。
+舵机有多种规格，但它们都有三根连接线，分别是棕色、红色、橙色(不同品牌可能有不同的颜色)。棕色为GND，红色为电源正极，橙色为信号线
+![Img](./media/img-20230324190535.png)
+舵机的伺服系统由可变宽度的脉冲来进行控制，橙色的控制线是用来传送脉冲的。一般而言，PWM控制舵机的基准信号周期为20ms（50Hz），理论上脉宽应在1ms到2ms之间，对应控制舵机角度是0°～180°。但是，实际上更多控制舵机的脉宽范围是0.5ms 到2.5ms，具体需要自己实际调试下。
+![Img](./media/img-20230324190601.png)
+经过实测，舵机的脉冲范围为0.65ms~2.5ms。180度舵机，对应的控制关系是这样的：
+|高电平时间|舵机角度|基准信号周期时间（20ms）|
+| :--: | :--: | :--: |
+|0.65ms|0度|0.65ms高电平+19.35ms低电平|
+|1.5ms|90度|1.5ms高电平+18.5ms低电平|
+|2.5ms|180度|2.5ms高电平+17.5ms低电平|
+
+舵机的规格参数：
+|工作电压：|DC 4.8V〜6V|
+| :--: | :--: |
+|可操作角度范围：|可操作角度范围：|
+|脉波宽度范围：|500→2500 μsec|
+|外观尺寸：|22.9*12.2*30mm|
+|空载转速：|0.12±0.01 sec/60度（DC 4.8V）  0.1±0.01 sec/60度（DC 6V）|
+|空载电流：|200±20mA（DC 4.8V）  220±20mA（DC 6V）|
+|停止扭力：|1.3±0.01kg·cm（DC 4.8V）  1.5±0.1kg·cm（DC 6V）|
+|停止电流：|≦850mA（DC 4.8V）  ≦1000mA（DC 6V）|
+|待机电流：|3±1mA（DC 4.8V）  4±1mA（DC 6V）|
+|重量:|9±1g (不带舵机轴)|
+|使用温度：|-30℃~60℃|
+
+<span style="color: rgb(255, 76, 65);">这里要注意，不要使用电脑和USB数据线供电，因为如果电流需求大于500mA，会有烧坏舵机的可能，推荐使用电池外置供电。</span>
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.实验代码：
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+
+class Servo:
+    def __init__(self, pin, freq=50, min_us=600, max_us=2400, angle=180):
+        self.min_us = min_us
+        self.max_us = max_us
+        self.us = 0
+        self.freq = freq
+        self.angle = angle
+        self.analog_period = 0
+        self.pin = pin
+        analog_period = round((1/self.freq) * 1000)  # hertz to miliseconds
+        self.pin.set_analog_period(analog_period)
+
+    def write_us(self, us):
+        us = min(self.max_us, max(self.min_us, us))
+        duty = round(us * 1024 * self.freq // 1000000)
+        self.pin.write_analog(duty)
+        sleep(100)
+        self.pin.write_analog(0)
+
+    def write_angle(self, degrees=None):
+        if degrees is None:
+            degrees = math.degrees(radians)
+        degrees = degrees % 360
+        total_range = self.max_us - self.min_us
+        us = self.min_us + total_range * degrees // self.angle
+        self.write_us(us)
+
+Servo(pin14).write_angle(0)
+sleep(1000)
+display.show(Image.HAPPY)
+
+while True:
+        Servo(pin14).write_angle(0)
+        sleep(1000)
+        Servo(pin14).write_angle(45)
+        sleep(1000)
+        Servo(pin14).write_angle(90)
+        sleep(1000)
+        Servo(pin14).write_angle(135)
+        sleep(1000)
+        Servo(pin14).write_angle(180)
+        sleep(1000)
+```
+
+5.实验结果：                                                                                
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码下载到micro：bit主板。microbit主板上的LED点阵显示“笑脸”图案，并且舵机从0°~ 45°~ 90°~ 135°~ 180°~ 0°，循环进行。   
+
+
+
+
+
+
+
+
+
+
+#### 第16课 电机控制
+![Img](./media/img-20230426164441.png)
+
+1.实验说明：                                                                                
+要想让小车跑起来那必须要有电机，然后搭配车轮就可以了。我们这个套件上配有4个直流减速电机，即齿轮减速电机，是在普通直流电机的基础上，加上配套齿轮减速箱。齿轮减速箱的作用是，提供较低的转速，较大的力矩。同时，齿轮箱不同的减速比可以提供不同的转速和力矩。这大大提高了直流电机在自动化行业中的使用率，减速电机是指减速机和电机（马达）的集成体，这种集成体通常也可称为齿轮马达或齿轮电机。减速电机广泛应用于钢铁行业、机械行业等。使用减速电机的优点是简化设计、节省空间。
+电机的驱动不比LED，它要求的电流比较大，如果我们使用IO口强制驱动电机，要么电机不转动，要么烧坏单片机，所以我们需要一个电机驱动芯片。在电机驱动底板板上已经包含了DRV8833电机驱动芯片，用来控制4个直流减速电机的转动方向和转动速度。下面也有电机驱动底板两个芯片的电路原理图。
+
+2.相关知识： 
+![Img](./media/img-20230426160942.png)
+![Img](./media/img-20230426160947.png)
+![Img](./media/img-20230426160700.png)
+![Img](./media/img-20230426160709.png)
+每个芯片控制4个引脚，每两个引脚控制一个电机，这样就使用了8个引脚控制了4个电机了。我们可以看到电机驱动与STC的接线图，我们驱动电机的时候使用IIC协议往STC这个芯片对应的寄存器地址写入脉宽值就可以输出pwm信号给电机驱动芯片了，我们已经写好了电机驱动的库文件，使用的时候只需要调用API函数就可以让小车走了，非常简单。
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.添加库文件：                                                                               
+添加库文件的方法请参照<span style="color: rgb(255, 76, 65);">Python教程中第13课的文件“第13课：七彩灯闪烁\.py”</span>，也可以参照<span style="color: rgb(255, 76, 65);">“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”</span>。
+
+5.实验代码1：
+**智能小车行走**
+
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+mecanumCar = Mecanum_Car_Driver_V2()
+while True:
+    display.show(Image.ARROW_S)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    display.show(Image.ARROW_N)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(0, 100)
+    mecanumCar.Motor_Lower_R(0, 100)
+    sleep(1000)
+    display.show(Image.ARROW_E)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    display.show(Image.ARROW_W)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(0, 100)
+    mecanumCar.Motor_Lower_R(0, 100)
+    sleep(1000)
+    display.show(Image("00900:""09990:""99999:""99999:""09090"))
+    mecanumCar.Motor_Upper_L(0, 0)
+    mecanumCar.Motor_Lower_L(0, 0)
+    mecanumCar.Motor_Upper_R(0, 0)
+    mecanumCar.Motor_Lower_R(0, 0)
+    sleep(1000)
+```
+
+6.实验结果1：                                                                                
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码1下载到micro：bit主板。这样，我们可以看到麦克纳姆轮智能车将前进1s，后退1s，左转1s，右转1s，原地左旋1s，原地左旋1s，停止1s，并且每种运动状态下LED点阵显示对应图案。一直循环。
+
+7.实验代码2：
+**智能小车按路线图行走** 
+                                                                             
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import button_a, button_b, display, Image, sleep
+from keyes_mecanum_Car_V2 import *
+mecanumCar = Mecanum_Car_Driver_V2()
+
+show_L = Image("90000:""90000:""90000:""90000:""99999")
+show_O = Image("09990:""90009:""90009:""90009:""09990")
+a = 0
+b = 0
+def run_L():
+    global b
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(250)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 0)
+    mecanumCar.Motor_Lower_L(0, 0)
+    mecanumCar.Motor_Upper_R(0, 0)
+    mecanumCar.Motor_Lower_R(0, 0)
+    b = 0
+def run_O():
+    global b
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(250)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(250)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 100)
+    mecanumCar.Motor_Lower_L(0, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(250)
+    mecanumCar.Motor_Upper_L(1, 100)
+    mecanumCar.Motor_Lower_L(1, 100)
+    mecanumCar.Motor_Upper_R(1, 100)
+    mecanumCar.Motor_Lower_R(1, 100)
+    sleep(1000)
+    mecanumCar.Motor_Upper_L(0, 0)
+    mecanumCar.Motor_Lower_L(0, 0)
+    mecanumCar.Motor_Upper_R(0, 0)
+    mecanumCar.Motor_Lower_R(0, 0)
+    b = 0
+while True:
+    if button_a.was_pressed():
+        a = a + 1
+        if a >= 3:
+            a = 0
+    if button_b.was_pressed():
+        b = 1
+    if (a == 1):
+        display.show(show_L)
+        if b == 1:
+            run_L()
+    elif a == 2:
+        display.show(show_O)
+        if b == 1:
+            run_O()
+```
+
+8.实验结果2：                                                                             
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码2下载到micro：bit主板。这样，当我们第一次按A键时，LED点阵会显示“L”图案，再按B键，可以看到麦克纳姆轮智能车前进的Route是“L”；当我们第二次按A键时，LED点阵会显示“口”图案，再按B键，可以看到麦克纳姆轮智能车前进的Route是“口”；当我们第三次按A键时，LED点阵会显示“L”，再按B键，可以看到麦克纳姆轮智能车前进的Route是“L”； ........；保持循环处于这种状态。
+
+9.代码说明：
+|from microbit import button_a, button_b, display, Image, sleep|导入micro：bit库文件中的button_a, button_b, display, Image, sleep|
+| :--: | :--: |
+|from  keyes_mecanum_Car_V2  import *| 导入keyes_mecanum_Car_V2的库文件 |
+| mecanumCar =Mecanum_Car_Driver_V2() | 实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar |
+|while True:|这是一个永久循环，它使micro：bit永远执行这个循环中的代码。 |
+|display.show(Image.ARROW_S) |micro:bit上的LED点阵屏显示指向“南”方向图案 |
+| display.show(Image("00900:""09990:""99999:""99999:""09090"))|micro:bit上的LED点阵屏显示“❤”图案|
+|mecanumCar.Motor_Upper_L(1, 100)| 智能车的左前方电机以PWM100的速度正转<span style="color: rgb(255, 76, 65);">（1表示正转，0表示反转；PWM100是速度（0~255）），当PWM值为0 时停止转动。</span> |
+|mecanumCar.Motor_Upper_R(0, 100) |智能车的右前方电机以PWM100的速度反转 |
+| sleep(1000) |延时1000毫秒 |
+| a = 0 |设置变量a初始值为0 |
+| b = 0 | 设置变量b初始值为02 |
+| def run_L(): |定义子函数run_L() |
+| def run_O():|定义子函数run_O() |
+|show_L = Image("90000:""90000:""90000:""90000:""99999") |将Image()赋给于变量show_L |
+| if button_a.was_pressed():| 如果microbit上的按键A按下时|
+| a = a + 1| 变量a加1 |
+| if a >= 3: | 如果变量a≥3成立时|
+| a = 0 |变量a=0 |
+|if button_b.was_pressed():| 如果microbit上的按键B按下时 |
+| b = 1 | 变量b=1|
+| if (a == 1): | 如果a=1成立时 |
+|display.show(show_L) | micro:bit上的LED点阵显示“L”图案 |
+| if b == 1: | 如果b=1成立时 |
+| run_L() |智能车走“L”型路线|
+| elif a == 2: | 否则如果a=2成立时 |
+| display.show(show_O) |micro:bit上的LED点阵显示“O”图案 |
+| if b == 1: | 如果b=1成立时 |
+| run_O() | 智能车走“O”型路线 |
+
+
+
+#### 第17课 循迹传感器
+![Img](./media/img-20230426164533.png)
+1.实验说明：                                                                                 
+循迹传感器实际上是红外传感器。 在小车驱动底板的前面有3路巡线，此处使用的组件是TCRT5000红外灯管。 其工作原理是利用红外光对颜色的不同反射率，然后将反射信号的强度转换为电流信号。 在检测过程中，黑色在高电平时处于活动状态，而白色在低电平时处于活动状态，即检测到黑色时或者近距离没有检测到物体时输出高电平，检测到白色或者光滑易反射光的物体时输出低电平。 检测高度为0-3厘米。 底板上方还有3个蓝色旋转电位器，通过旋转这些电位器，可以调节传感器的检测灵敏度。
+
+2.相关知识：
+- 工作电压: 3.3-5V (DC)
+- 接口: 5PIN接口(我们接到了16,17,18)
+- 输出信号: 数字信号
+- 检测高度: 0-3 cm
+
+**红外循迹传感器：** 红外循迹传感器的红外对管分为两部分，一部分是红外发射端，另一部分是红外接收端。
+![Img](./media/img-20230522172021.png)
+黑线或黑色物体对红外线有很好的吸收效果。当红外循迹发射端向黑线发射时，发射的红外线被吸收而未形成反射信号，红外循迹接收端未接收到信号，这样红外循迹输出高电平(1);白线或白色物体对红外线没有吸收作用，红外循迹发射端的红外信号会反射回接收端，这样红外循迹输出低电平(0)。
+
+下表给出了小车底板上的红外循迹传感器检测不同颜色物体的所有情况下的数值。其中检测到黑线、黑色物体或无物体代表1，检测到白线或白色物体代表0。
+![Img](./media/img-20230523170452.png)
+
+|左红外循迹传感器|中间红外循迹传感器|右红外循迹传感器|值（二进制）|
+| :--: | :--: |:--:| :--: |
+|0|0|0|000|
+|0|0|1|001|
+|0|1|0|010|
+|0|1|1|011|
+|1|0|0|100|
+|1|0|1|101|
+|1|1|0|110|
+|1|1|1|111|
+
+<span style="color: rgb(255, 76, 65);">警告：反射式光学传感器(包括红外循迹)应避免在阳光等有红外干扰的环境中使用。阳光中含有许多不可见光，如红外线和紫外线。在强光环境下，反射式光学传感器不能正常工作。</span>
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的POWER拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.实验代码：
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+display.off()
+
+val_L = 0
+val_C = 0
+val_R = 0
+while True:
+    val_L = pin3.read_digital()
+    val_C = pin4.read_digital()
+    val_R = pin10.read_digital()
+    print("digital signal:", end = ' ')
+    print(val_L, end = ' ')
+    print(val_C, end = ' ')
+    print(val_R)
+    sleep(200)
+```
+
+5.实验结果：                                                                                
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将将代码下载到micro：bit主板，Micro USB数据线不要拔下来，利用Micro USB数据线上电。
+
+**先点击“REPL”按钮，再按一下micro:bit后面的复位按钮**，这样，BBC microbit REPL窗口打印并显示了micro:bit迷你智能麦克纳姆轮智能车上3路循迹传感器的左边TCRT5000红外对管检测到的数字信号，当TCRT5000红外对管检测到白色物体时，串口监视器窗口显示低电平（0），同时传感器模块对应的指示灯亮起；当TCRT5000红外对管检测到黑色物体或未检测到物体时，串口监视器窗口显示高电平（1），同时传感器模块对应的指示灯不亮，如下图：
+![Img](./media/img-20230522154635.png)
+
+
+6.代码说明：
+|from  microbit  import *| 导入micro：bit的库 |
+| :--: | :--: |
+| val_L = 0 |设置变量初始值为0  |
+| while True: |这是一个永久循环，它使micro：bit永远执行这个循环中的代码|
+|val_L = pin3.read_digital()| 将接在P3控制口的TCRT5000红外对管读取的数字信号赋给于变量val_L |
+| print("digital signal:", end = ' ')| 不换行打印”digital signal” |
+| print(val_L, end = ' ') |不换行打印信号值val_L|
+| print(val_R) |换行打印信号值val_R |
+| sleep(200) | 延时200ms |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 第18课 循迹智能车
+![Img](./media/img-20230426170747.png)
+1.实验说明：
+前面我们学习了循迹传感器和电机驱动的原理和应用，下面我们要结合循迹传感器和电机驱动来做一款循迹小车。
+循迹，意思就是循着轨迹，也就是我们经常会看到的走黑线的循迹小车，原理是利用循迹传感器对路面黑色轨迹进行检测，并将路面检测信号反馈给控制主板。控制板对采集到的信号予以分析判断，及时控制驱动电机以调整小车转向，从而使小车能够沿着黑色轨迹自动行驶，实现循迹小车自动寻迹的目的，我们来看看下面的流程图就清晰了：
+
+2.实验原理：
+|左红外循迹传感器|中间红外循迹传感器|右红外循迹传感器|值（二进制）|状态|
+| :--: | :--: |:--:| :--: | :--: |
+|0|0|0|000|停止|
+|0|0|1|001|向右转|
+|0|1|0|010|直走|
+|0|1|1|011|向右转|
+|1|0|0|100|向左转|
+|1|0|1|101|停止|
+|1|1|0|110|向左转|
+|1|1|1|111|直走|
+![Img](./media/img-20230523171931.png)
+
+3.实验流程图：
+![Img](./media/img-20230426171120.png)
+
+4.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+<span style="color: rgb(255, 76, 65);"> 警告：</span>3路循迹传感器应避免在阳光等有红外干扰的环境中使用。阳光中含有大量的不可见光，如红外线和紫外线。在阳光强烈的环境下，3路循迹传感器不能正常工作。  
+
+
+5.添加库文件：                                                                               
+添加库文件的方法请参照<span style="color: rgb(255, 76, 65);">Python教程中第13课的文件“第13课：七彩灯闪烁\.py”</span>，也可以参照<span style="color: rgb(255, 76, 65);">“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”</span>。
+
+6.实验代码：
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+mecanumCar = Mecanum_Car_Driver_V2()
+display.off()
+
+val_L = 0
+val_C = 0
+val_R = 0
+while True:
+    val_L = pin3.read_digital()
+    val_C = pin4.read_digital()
+    val_R = pin10.read_digital()
+    if val_C == 0:
+        if val_L == 0 and val_R == 1:
+            mecanumCar.Motor_Upper_L(1, 80)
+            mecanumCar.Motor_Lower_L(1, 80)
+            mecanumCar.Motor_Upper_R(0, 80)
+            mecanumCar.Motor_Lower_R(0, 80)
+        elif val_L == 1 and val_R == 0:
+            mecanumCar.Motor_Upper_L(0, 80)
+            mecanumCar.Motor_Lower_L(0, 80)
+            mecanumCar.Motor_Upper_R(1, 80)
+            mecanumCar.Motor_Lower_R(1, 80)
+        else:
+            mecanumCar.Motor_Upper_L(0, 0)
+            mecanumCar.Motor_Lower_L(0, 0)
+            mecanumCar.Motor_Upper_R(0, 0)
+            mecanumCar.Motor_Lower_R(0, 0)
+    else :
+        if val_L == 0 and val_R == 1:
+            mecanumCar.Motor_Upper_L(1, 80)
+            mecanumCar.Motor_Lower_L(1, 80)
+            mecanumCar.Motor_Upper_R(0, 80)
+            mecanumCar.Motor_Lower_R(0, 80)
+        elif val_L == 1 and val_R == 0:
+            mecanumCar.Motor_Upper_L(0, 80)
+            mecanumCar.Motor_Lower_L(0, 80)
+            mecanumCar.Motor_Upper_R(1, 80)
+            mecanumCar.Motor_Lower_R(1, 80)
+```
+
+7.实验结果：
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将将代码下载到micro：bit主板。这样，循迹小车能随着黑色轨迹前行。
+
+<span style="color: rgb(255, 76, 65);">特别注意：</span>
+
+（1）小车循迹轨道，黑线的宽度必须大于等于3路循迹传感器模块的宽度，小车速度尽量应调低一些。
+
+（2）测试小车时，不要在阳光明媚的太阳底下测试。测试过程中，如果出现问题，可在暗一点的环境中测试。
+
+8.代码说明：
+
+|from  microbit  import *| 导入micro：bit的库 |
+| :--: | :--: |
+|from  keyes_mecanum_Car_V2  import *|导入keyes_mecanum_Car_V2的库文件|
+|mecanumCar = Mecanum_Car_Driver_V2() |实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar|
+|display.off()|micro:bit上的LED点阵关闭显示|
+| val_L = 0 |设置变量初始值为0  |
+| while True: |这是一个永久循环，它使micro：bit永远执行这个循环中的代码|
+|val_L = pin3.read_digital()| 将接在P3控制口的TCRT5000红外对管读取的数字信号赋给于变量val_L |
+|if val_C == 0:|如果中间为0时：|
+|if val_L == 0 and val_R == 1:|如果val_L = 0 且 val_R =1成立时|
+|elif val_L == 1 and val_R == 0:|否则如果val_L = 1 且 val_R =0成立时|
+|mecanumCar.Motor_Upper_L(1, 80)|智能车的左前电机以PWM 80的速度正转|
+|mecanumCar.Motor_Upper_R(0, 80)|智能车的右前电机以PWM 80的速度反转|
+
+
+
+
+
+
+
+
+
+
+
+
+#### 第19课 超声波传感器
+
+1. 实验说明：
+小车上有个超声波传感器，超声波传感器是一种非常实惠的距离传感器，它可以检测前方是否存在障碍物，并且检测出传感器与障碍物的详细距离。
+![Img](./media/img-20230427084139.png)
+它的原理和蝙蝠飞行的原理一样，就是超声波传感器发送出一种频率很高的超声波信号，通常正常人耳朵的听力的声波范围是20Hz~20kHz，人类无法听到。这些超声波的信号若是碰到障碍物，就会立刻反射回来，在接收到返回的信息之后，通过判断发射信号和接收信号的时间差，计算出传感器和障碍物的距离。超声波传感器主要用于各种机器人项目中的物体躲避和测距，也常被用于水位传感，甚至作为一个停车传感器。
+在本实验中，我们使用超声波传感器来测量距离，并将数据打印在串口监视器上。根据前面的接线图可知，超声波传感器模块集成端口是接在电机驱动底板上5V G P15 P16集合端口，Trig（T）引脚对应的是micro:bit的P15控制的；Echo（E）引脚对应的是micro:bit的P16控制的。
+
+2.元件知识：
+**HC-SR04超声波传感器：** 像蝙蝠一样使用声纳来确定与物体的距离，它提供了精准的非接触范围检测，高精度和稳定的读数。它的操作不受阳光或黑色材料的影响，就像精密的照相机(在声学上像布料这样比较软的材料很难被探测到)。它带有超声波信号发射端和信号接收端。
+
+我们看下超声波传感器模块的图片，两个像眼睛一样的东西，一个就是信号发射端（TRIG），一个就是信号接收端（ECHO）。    
+![Img](./media/img-20230426105612.png)   
+
+**参数：**
+- 工作电压:+5V DC
+- 静态电流: <2mA
+- 工作电流: 15mA
+- 有效角度: <15°
+- 距离范围: 2cm – 400 cm
+- 精度: 0.3 cm
+- 测量角度: 30 degree
+- 触发输入脉宽: 10us
+
+**原理：**
+
+最常用的超声测距的方法是回声探测法，如图：
+![Img](./media/img-20230427084201.png)
+超声波发射器向某一方向发射超声波，在发射时刻的同时计数器开始计时，超声波在空气中传播，途中碰到障碍物面阻挡就立即反射回来，超声波接收器收到反射回的超声波就立即停止计时。超声波也是一种声波，其声速V与温度有关。一般情况下超声波在空气中的传播速度为340m/s，根据计时器记录的时间t，就可以计算出发射点距障碍物面的距离s，即：s=340t/2：
+(1)采用IO口TRIG触发测距，给至少10us的高电平信号;
+(2)模块自动发送8个40khz的方波，自动检测是否有信号返回；
+(3)有信号返回，通过ECHO输出一个高电平，单片机读取到高电平持续的时间就是超声波从发射到返回的时间。
+![Img](./media/img-20230330112930.png)
+超声波模块的电路图：
+![Img](./media/img-20230330112940.png)
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.添加库文件：                                                                               
+添加库文件的方法请参照<span style="color: rgb(255, 76, 65);">Python教程中第13课的文件“第13课：七彩灯闪烁\.py”</span>，也可以参照<span style="color: rgb(255, 76, 65);">“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”</span>。
+
+5.实验代码：
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+mecanumCar = Mecanum_Car_Driver_V2()
+import music
+tune = ["C4:4"]
+distance_val = 0
+
+while True:
+    i = 0
+    distance_val = mecanumCar.get_distance()
+    print("distance:", distance_val)
+    if distance_val < 10:
+        while i < 1:
+            music.play(tune)
+            sleep(200)
+            music.play(tune)
+            sleep(200)
+            i += 1
+```
+6.实验结果：
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码下载到micro：bit主板，micro USB数据线不能从micro：bit上拔下来，利用Micro USB数据线上电。
+
+**然后先点击“REPL”按钮，再按一下micro:bit后面的复位按钮**，这样，BBC microbit REPL窗口打印并显示了智能车上的超声波传感器模块与障碍物之间的距离（如下图），并且当障碍物与超声波传感器模块的距离小于10cm时，小车控制板上无源蜂鸣器响起声音。
+![Img](./media/img-20230522155507.png)
+
+7.代码说明：
+|from microbit import button_a, button_b, display, Image, sleep|导入micro：bit库文件中的button_a, button_b, display, Image, sleep等必要的部分|
+| :--: | :--: |
+|from  keyes_mecanum_Car_V2  import *| 导入keyes_mecanum_Car_V2的库文件 |
+| mecanumCar =Mecanum_Car_Driver_V2() | 实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar |
+|import music |导入音乐的库文件|
+|tune = ["C4:4"]  |创建变量tune来存储音符。|
+|while True:|这是一个永久循环，它使micro：bit永远执行这个循环中的代码|
+|i = 0|设置变量i=0|
+|distance_val = mecanumCar.get_distance()|将mecanumCar.get_distance()赋给于变量distance_val |
+|print("distance:", distance_val)|BBC microbit REPL窗口打印超声波传感器检测到离障碍物之间的距离|
+|if distance < 10:|如果距离小于10cm成立时|
+|while i < 1:|当变量i＜1成立时|
+|music.play(tune)|无源蜂鸣器发出声音|
+|i += 1|变量i逐渐加1|
+|sleep(200)|延时200毫秒|
+
+
+
+
+
+
+
+
+
+
+
+
+#### 第20课 超声波跟随智能小车
+![Img](./media/img-20230427085645.png)
+
+1.实验说明：                                                                                
+前面我们学习了使用循迹传感器和电机来制作了一个自动巡线智能小车，这节课我们使用超声波传感器和电机来制作一个自动跟随智能小车，我们通过超声波传感器检测智能车和前方障碍物的距离，然后根据这一个数据控制两个电机的转动，从而控制智能车的运动状态，我们来看看下面的程序流程图就很清晰了：
+
+2.实验流程图：                                                                          
+![Img](./media/img-20230427093155.png)
+    
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.添加库文件：                                                                               
+添加库文件的方法请参照<span style="color: rgb(255, 76, 65);">Python教程中第13课的文件“第13课：七彩灯闪烁\.py”</span>，也可以参照<span style="color: rgb(255, 76, 65);">“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”</span>。
+
+5.实验代码：
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+import neopixel
+display.off()
+
+mecanumCar = Mecanum_Car_Driver_V2()
+np = neopixel.NeoPixel(pin7, 4)
+
+class Servo:
+    def __init__(self, pin, freq=50, min_us=600, max_us=2400, angle=180):
+        self.min_us = min_us
+        self.max_us = max_us
+        self.us = 0
+        self.freq = freq
+        self.angle = angle
+        self.analog_period = 0
+        self.pin = pin
+        analog_period = round((1/self.freq) * 1000)  # hertz to miliseconds
+        self.pin.set_analog_period(analog_period)
+
+    def write_us(self, us):
+        us = min(self.max_us, max(self.min_us, us))
+        duty = round(us * 1024 * self.freq // 1000000)
+        self.pin.write_analog(duty)
+        sleep(100)
+        self.pin.write_analog(0)
+
+    def write_angle(self, degrees=None):
+        if degrees is None:
+            degrees = math.degrees(radians)
+        degrees = degrees % 360
+        total_range = self.max_us - self.min_us
+        us = self.min_us + total_range * degrees // self.angle
+        self.write_us(us)
+
+Servo(pin14).write_angle(90)
+
+while True:
+    distance_val = 0
+    distance_val = mecanumCar.get_distance()
+    if distance_val >= 20 and distance_val <= 40:
+        mecanumCar.Motor_Upper_L(1, 80)
+        mecanumCar.Motor_Lower_L(1, 80)
+        mecanumCar.Motor_Upper_R(1, 80)
+        mecanumCar.Motor_Lower_R(1, 80)
+        for pixel_id1 in range(0, len(np)):
+            np[pixel_id1] = (255, 0, 0)
+            np.show()
+    if distance_val <= 10:
+        mecanumCar.Motor_Upper_L(0, 80)
+        mecanumCar.Motor_Lower_L(0, 80)
+        mecanumCar.Motor_Upper_R(0, 80)
+        mecanumCar.Motor_Lower_R(0, 80)
+        for pixel_id1 in range(0, len(np)):
+            np[pixel_id1] = (255, 255, 0)
+            np.show()
+    if distance_val > 10 and distance_val < 20 or distance_val > 40:
+        mecanumCar.Motor_Upper_L(0, 0)
+        mecanumCar.Motor_Lower_L(0, 0)
+        mecanumCar.Motor_Upper_R(0, 0)
+        mecanumCar.Motor_Lower_R(0, 0)
+        for pixel_id1 in range(0, len(np)):
+            np[pixel_id1] = (255, 255, 255)
+            np.show()
+
+```
+
+6.实验结果：
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码下载到micro：bit主板。这样，小车可以跟随前方障碍物的移动而移动。麦克纳姆轮智能车不同的运动状态，4个WS2812 RGB灯亮起不同的颜色。
+
+<span style="color: rgb(255, 76, 65);">注意：</span>障碍物只能在小车的正前方移动，不能拐弯。
+
+| from microbit import *| 导入microbit的库文件 |
+| :--: | :--: |
+|from keyes_mecanum_Car_V2 import * | 导入keyes_mecanum_Car_V2的库文件|
+| mecanumCar = Mecanum_Car_Driver_V2() | 实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar |
+|import neopixel   | 导入neopixel的库文件|
+| display.off() | 关闭点阵 |
+| np = neopixel.NeoPixel(pin7, 4)    | 将Neopixel设为引脚P7初始化灯带4颗LED |
+| Servo(pin14).write_angle(90) | P14脚连接的舵机转动到90度 |
+| while True: | 这是一个永久循环，它使micro：bit永远执行这个循环中的代码 |
+| distance_val = 0 | 设置变量distance_val初始值为0|
+| distance_val = mecanumCar.get_distance() |将mecanumCar.get_distance()赋给于变量distance_val|
+| if distance_val >= 20 and distance_val <= 40: | 如果distance_val ≥20且distance_val ≤ 40成立时 |
+| for pixel_id1 in range(0, len(np)): | 对于（0，len（np））范围内的RGB像素为pixel_id1 |
+| np[pixel_id1] = (255, 0, 0)|设置pixel_id1亮红色灯|
+|np.show() |在Neopixel条带上显示像素 |
+|mecanumCar.Motor_Upper_L(1, 100)| 智能车的左前方电机以PWM100的速度正转<span style="color: rgb(255, 76, 65);">（1表示正转，0表示反转；PWM100是速度（0~255）），当PWM值为0 时停止转动。</span> |
+|mecanumCar.Motor_Upper_R(0, 100) |智能车的右前方电机以PWM100的速度反转 |
+
+
+
+
+
+
+#### 第21课 超声波避障智能小车
+![Img](./media/img-20230427092934.png)
+
+1.实验说明：                                                                                
+在上个项目中，我们制作了一个超声波跟随智能车。实际上，利用同样的硬件，同样的接线方法，我们只需要更改一个测试代码就可以将跟随智能车变为避障智能车。超声波避障智能车，就是通过超声波传感器检测前方障碍物的距离，然后舵机云台转动检测到左右两边的距离，然后根据这一个数据控制四个电机的转动，从而控制智能车的运动状态，从而实现避障。
+我们来看看下面的程序流程图就很清晰了：
+
+2.实验流程图： 
+![Img](./media/img-20230427093132.png)
+
+3.实验准备：
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。 
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。 
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 
+（4）通过micro USB线连接micro:bit主板和电脑。 
+（5）打开离线版本的Mu软件。
+
+4.添加库文件：                                                                               
+添加库文件的方法请参照<span style="color: rgb(255, 76, 65);">Python教程中第13课的文件“第13课：七彩灯闪烁\.py”</span>，也可以参照<span style="color: rgb(255, 76, 65);">“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”</span>。
+
+5.实验代码：
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。<span style="color: rgb(255, 0, 255);">（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）</span>
+
+<span style="color: rgb(255, 76, 65);">添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu Editor 编译器教程”。</span>
+
+```
+from microbit import *
+from keyes_mecanum_Car_V2 import *
+mecanumCar = Mecanum_Car_Driver_V2()
+distance_val = 0
+distance_l = 0
+distance_r = 0
+class Servo:
+    def __init__(self, pin, freq=50, min_us=600, max_us=2400, angle=180):
+        self.min_us = min_us
+        self.max_us = max_us
+        self.us = 0
+        self.freq = freq
+        self.angle = angle
+        self.analog_period = 0
+        self.pin = pin
+        analog_period = round((1/self.freq) * 1000)  # hertz to miliseconds
+        self.pin.set_analog_period(analog_period)
+
+    def write_us(self, us):
+        us = min(self.max_us, max(self.min_us, us))
+        duty = round(us * 1024 * self.freq // 1000000)
+        self.pin.write_analog(duty)
+        sleep(100)
+        self.pin.write_analog(0)
+
+    def write_angle(self, degrees=None):
+        if degrees is None:
+            degrees = math.degrees(radians)
+        degrees = degrees % 360
+        total_range = self.max_us - self.min_us
+        us = self.min_us + total_range * degrees // self.angle
+        self.write_us(us)
+
+Servo(pin14).write_angle(90)
+
+while True:
+
+    distance_val = mecanumCar.get_distance()
+
+    if distance_val < 20:
+        mecanumCar.Motor_Upper_L(0, 0)
+        mecanumCar.Motor_Lower_L(0, 0)
+        mecanumCar.Motor_Upper_R(0, 0)
+        mecanumCar.Motor_Lower_R(0, 0)
+        sleep(500)
+        Servo(pin14).write_angle(180)
+        sleep(500)
+        distance_l = mecanumCar.get_distance()
+        sleep(500)
+
+        Servo(pin14).write_angle(0)
+        sleep(500)
+        distance_r = mecanumCar.get_distance()
+        sleep(500)
+
+        if distance_l > distance_r:
+            mecanumCar.Motor_Upper_L(0, 100)
+            mecanumCar.Motor_Lower_L(0, 100)
+            mecanumCar.Motor_Upper_R(1, 100)
+            mecanumCar.Motor_Lower_R(1, 100)
+            Servo(pin14).write_angle(90)
+            sleep(300)
+        else:
+            mecanumCar.Motor_Upper_L(1, 100)
+            mecanumCar.Motor_Lower_L(1, 100)
+            mecanumCar.Motor_Upper_R(0, 100)
+            mecanumCar.Motor_Lower_R(0, 100)
+            Servo(pin14).write_angle(90)
+            sleep(300)
+
+    else:
+        mecanumCar.Motor_Upper_L(1, 100)
+        mecanumCar.Motor_Lower_L(1, 100)
+        mecanumCar.Motor_Upper_R(1, 100)
+        mecanumCar.Motor_Lower_R(1, 100)
+```
+
+6.实验结果：
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“**刷入**”将代码下载到micro：bit主板。这样，麦克纳姆轮智能车在离前方障碍物的距离大于20cm时，麦克纳姆轮智能车向前走，反之，麦克纳姆轮智能车上搭载超声波的舵机云台，将向左转，检测左边的距离，再向右转，检测右边的距离，然后判断左右两边的距离，哪边距离大就往哪边走。
+
+7.代码说明：
+|from microbit import *| 导入microbit的库文件 |
+| :--: | :--: |
+| from keyes_mecanum_Car_V2 import * | 导入keyes_mecanum_Car_V2的库文件 |
+| mecanumCar = Mecanum_Car_Driver_V2() |实例化一个对象Mecanum_Car_Driver_V2()为mecanumCar|
+| distance_val = 0 | 设置变量distance_val初始值为0 |
+| distance_l = 0 | 设置变量distance_l初始值为0 |
+| distance_r = 0 | 设置变量distance_r初始值为0 |
+| Servo(pin14).write_angle(90) | 舵机连接P14，转动角度为90度 |
+|while True: |这是一个永久循环，它使micro：bit永远执行这个循环中的代码|
+| if distance_val < 20:| 如果distance_val <20成立时|
+| mecanumCar.Motor_Upper_L(0, 0) | 智能车的左前电机停止转动 |
+| distance_val = mecanumCar.get_distance()|将mecanumCar.get_distance()赋给于变量distance_val |
+|if distance_l > distance_r: |如果distance_l > distance_r 条件成立 |
+| mecanumCar.Motor_Upper_L(1, 100) | 智能车的左前电机以PWM100正转|
+|mecanumCar.Motor_Lower_R(0, 100)|智能车的右后电机以PWM100反转|

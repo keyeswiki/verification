@@ -1,0 +1,117 @@
+第01课 心跳
+===========
+
+Micro:bit 基础课程是使用Micro:bit主板自带的传感器模块和LED点阵。
+
+.. _1实验说明:
+
+1.实验说明：
+------------
+
+首先先来练习一个不需要其他辅助元件，只需要一块Micro:bit主板，一根Micro
+USB数据线与一台计算机的简单实验，让Micro:bit主板上的点阵显示“心跳”，这是一个让Micro:bit主板和计算机通信的实验，这也是一个入门实验，希望可以带领大家进入Micro:bit的魔幻世界。
+
+.. _2准备:
+
+2.准备：
+--------
+
+（1）通过Micro USB线连接Micro:bit主板和电脑。 |Img|
+
+（2）打开离线版本的Mu软件。
+
+.. _3-课程代码:
+
+3. 课程代码：
+-------------
+
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+
+   while True:
+       display.show(Image.HEART)
+       sleep(500)
+       display.show(Image.HEART_SMALL)
+       sleep(500)
+
+.. _4-代码解释:
+
+4. 代码解释：
+-------------
+
++---------------------------------+-----------------------------------+
+| 代码块                          | 解释                              |
++=================================+===================================+
+| from microbit import \*         | 导入micro：bit的库文件            |
++---------------------------------+-----------------------------------+
+| while True:                     | 这是一个永久循环，它使mic         |
+|                                 | ro：bit永远执行这个循环中的代码。 |
++---------------------------------+-----------------------------------+
+| display.show(Image.HEART)       | micro：bit                        |
+|                                 | 上的LED点阵显示“\ |image5|\ ”图案 |
++---------------------------------+-----------------------------------+
+| sleep(500)                      | 延时500毫秒                       |
++---------------------------------+-----------------------------------+
+| display.show(Image.HEART_SMALL) | micro：bit                        |
+|                                 | 上的LED点阵显示“\ |image6|\ ”图案 |
++---------------------------------+-----------------------------------+
+
+.. _5-实验结果:
+
+5. 实验结果：
+-------------
+
+按照之前的方式将代码下载到micro：bit主板，micro
+USB数据线不要拔下来，利用micro
+USB数据线上电，micro:bit主板上的LED点阵屏切换显示“\ |image7|\ ”图案和“\ |image8|\ ”图案，循环进行。
+如果存在下载问题，请断开micro
+USB线和Micro：bit，然后重新连接它们并重新打开编译器，尝试再次下载。
+|image9| |image10|
+
+.. _6-扩展小知识:
+
+6. 扩展小知识：
+---------------
+
+可以看到“Image.HEART”等于\ |image11|\ ；“Image.HEART_SMALL”等于\ |image12|
+这其实是microbit里面写好的了，直接使用就即可。
+以下是内置图像的列表，如果感兴趣，可以选择以下某个内置图像替换上图代码中的函数show（）里面的“Image.HEART”就行。
+• Image.HEART • Image.HEART_SMALL • Image.HAPPY • Image.SMILE •
+Image.SAD • Image.CONFUSED • Image.ANGRY • Image.ASLEEP •
+Image.SURPRISED • Image.SILLY • Image.FABULOUS • Image.MEH • Image.YES •
+Image.NO • Image.CLOCK12, Image.CLOCK11, Image.CLOCK10, Image.CLOCK9,
+Image.CLOCK8, Image.CLOCK7, Image.CLOCK6, Image.CLOCK5, Image.CLOCK4,
+Image.CLOCK3, Image.CLOCK2,Image.CLOCK1 • Image.ARROW_N, Image.ARROW_NE,
+Image.ARROW_E, Image.ARROW_SE, Image.ARROW_S, Image.ARROW_SW,
+Image.ARROW_W, Image.ARROW_NW • Image.TRIANGLE • Image.TRIANGLE_LEFT •
+Image.CHESSBOARD • Image.DIAMOND • Image.DIAMOND_SMALL • Image.SQUARE •
+Image.SQUARE_SMALL • Image.RABBIT • Image.COW • Image.MUSIC_CROTCHET •
+Image.MUSIC_QUAVER • Image.MUSIC_QUAVERS • Image.PITCHFORK •
+Image.PACMAN • Image.TARGET • Image.TSHIRT • Image.ROLLERSKATE •
+Image.DUCK • Image.HOUSE • Image.TORTOISE • Image.BUTTERFLY •
+Image.STICKFIGURE • Image.GHOST • Image.SWORD • Image.GIRAFFE •
+Image.SKULL • Image.UMBRELLA •
+Image.SNAKE，Image.ALL_CLOCKS，Image.ALL_ARROWS
+
+更多的控制，请参考Micro:bit官方的python库：
+http://microbit-micropython.readthedocs.io/en/latest/index.html
+
+.. |Img| image:: ./media/img-20230327154148.png
+.. |image1| image:: ./media/img-20230327155005.png
+.. |image2| image:: ./media/img-20230327155035.png
+.. |image3| image:: ./media/img-20230327155005.png
+.. |image4| image:: ./media/img-20230327155035.png
+.. |image5| image:: ./media/img-20230327155005.png
+.. |image6| image:: ./media/img-20230327155035.png
+.. |image7| image:: ./media/img-20230327154538.png
+.. |image8| image:: ./media/img-20230327154544.png
+.. |image9| image:: ./media/img-20230327154603.png
+.. |image10| image:: ./media/img-20230327154607.png
+.. |image11| image:: ./media/img-20230327155122.png
+.. |image12| image:: ./media/img-20230327155128.png

@@ -1,0 +1,171 @@
+第20课 超声波跟随智能小车
+=========================
+
+|Img|
+
+.. _1实验说明:
+
+1.实验说明：
+------------
+
+前面我们学习了使用循迹传感器和电机来制作了一个自动巡线智能小车，这节课我们使用超声波传感器和电机来制作一个自动跟随智能小车，我们通过超声波传感器检测智能车和前方障碍物的距离，然后根据这一个数据控制两个电机的转动，从而控制智能车的运动状态，我们来看看下面的程序流程图就很清晰了：
+
+.. _2实验流程图:
+
+2.实验流程图：
+--------------
+
+|image1|
+
+.. _3实验准备:
+
+3.实验准备：
+------------
+
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 （4）通过micro
+USB线连接micro:bit主板和电脑。 （5）打开离线版本的Mu软件。
+
+.. _4添加库文件:
+
+4.添加库文件：
+--------------
+
+添加库文件的方法请参照Python教程中第13课的文件“第13课：七彩灯闪烁.py”，也可以参照“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+.. _5实验代码:
+
+5.实验代码：
+------------
+
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+   from keyes_mecanum_Car_V2 import *
+   import neopixel
+   display.off()
+
+   mecanumCar = Mecanum_Car_Driver_V2()
+   np = neopixel.NeoPixel(pin7, 4)
+
+   class Servo:
+       def __init__(self, pin, freq=50, min_us=600, max_us=2400, angle=180):
+           self.min_us = min_us
+           self.max_us = max_us
+           self.us = 0
+           self.freq = freq
+           self.angle = angle
+           self.analog_period = 0
+           self.pin = pin
+           analog_period = round((1/self.freq) * 1000)  # hertz to miliseconds
+           self.pin.set_analog_period(analog_period)
+
+       def write_us(self, us):
+           us = min(self.max_us, max(self.min_us, us))
+           duty = round(us * 1024 * self.freq // 1000000)
+           self.pin.write_analog(duty)
+           sleep(100)
+           self.pin.write_analog(0)
+
+       def write_angle(self, degrees=None):
+           if degrees is None:
+               degrees = math.degrees(radians)
+           degrees = degrees % 360
+           total_range = self.max_us - self.min_us
+           us = self.min_us + total_range * degrees // self.angle
+           self.write_us(us)
+
+   Servo(pin14).write_angle(90)
+
+   while True:
+       distance_val = 0
+       distance_val = mecanumCar.get_distance()
+       if distance_val >= 20 and distance_val <= 40:
+           mecanumCar.Motor_Upper_L(1, 80)
+           mecanumCar.Motor_Lower_L(1, 80)
+           mecanumCar.Motor_Upper_R(1, 80)
+           mecanumCar.Motor_Lower_R(1, 80)
+           for pixel_id1 in range(0, len(np)):
+               np[pixel_id1] = (255, 0, 0)
+               np.show()
+       if distance_val <= 10:
+           mecanumCar.Motor_Upper_L(0, 80)
+           mecanumCar.Motor_Lower_L(0, 80)
+           mecanumCar.Motor_Upper_R(0, 80)
+           mecanumCar.Motor_Lower_R(0, 80)
+           for pixel_id1 in range(0, len(np)):
+               np[pixel_id1] = (255, 255, 0)
+               np.show()
+       if distance_val > 10 and distance_val < 20 or distance_val > 40:
+           mecanumCar.Motor_Upper_L(0, 0)
+           mecanumCar.Motor_Lower_L(0, 0)
+           mecanumCar.Motor_Upper_R(0, 0)
+           mecanumCar.Motor_Lower_R(0, 0)
+           for pixel_id1 in range(0, len(np)):
+               np[pixel_id1] = (255, 255, 255)
+               np.show()
+
+.. _6实验结果:
+
+6.实验结果：
+------------
+
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“\ **刷入**\ ”将代码下载到micro：bit主板。这样，小车可以跟随前方障碍物的移动而移动。麦克纳姆轮智能车不同的运动状态，4个WS2812
+RGB灯亮起不同的颜色。
+
+注意：障碍物只能在小车的正前方移动，不能拐弯。
+
++----------------------------------+----------------------------------+
+| from microbit import \*          | 导入microbit的库文件             |
++==================================+==================================+
+| from keyes_mecanum_Car_V2 import | 导入keyes_mecanum_Car_V2的库文件 |
+| \*                               |                                  |
++----------------------------------+----------------------------------+
+| mecanumCar =                     | 实例化一个对象Mec                |
+| Mecanum_Car_Driver_V2()          | anum_Car_Driver_V2()为mecanumCar |
++----------------------------------+----------------------------------+
+| import neopixel                  | 导入neopixel的库文件             |
++----------------------------------+----------------------------------+
+| display.off()                    | 关闭点阵                         |
++----------------------------------+----------------------------------+
+| np = neopixel.NeoPixel(pin7, 4)  | 将Ne                             |
+|                                  | opixel设为引脚P7初始化灯带4颗LED |
++----------------------------------+----------------------------------+
+| Servo(pin14).write_angle(90)     | P14脚连接的舵机转动到90度        |
++----------------------------------+----------------------------------+
+| while True:                      | 这是一个永久循环，它使mi         |
+|                                  | cro：bit永远执行这个循环中的代码 |
++----------------------------------+----------------------------------+
+| distance_val = 0                 | 设置变量distance_val初始值为0    |
++----------------------------------+----------------------------------+
+| distance_val =                   | 将mecanumCar.get_                |
+| mecanumCar.get_distance()        | distance()赋给于变量distance_val |
++----------------------------------+----------------------------------+
+| if distance_val >= 20 and        | 如果distance_val                 |
+| distance_val <= 40:              | ≥20且distance_val ≤ 40成立时     |
++----------------------------------+----------------------------------+
+| for pixel_id1 in range(0,        | 对于（0，len（                   |
+| len(np)):                        | np））范围内的RGB像素为pixel_id1 |
++----------------------------------+----------------------------------+
+| np[pixel_id1] = (255, 0, 0)      | 设置pixel_id1亮红色灯            |
++----------------------------------+----------------------------------+
+| np.show()                        | 在Neopixel条带上显示像素         |
++----------------------------------+----------------------------------+
+| mecanumCar.Motor_Upper_L(1, 100) | 智能车的左前方电机以PWM100的速度 |
+|                                  | 正转（1表示正转，0表示反转；PWM  |
+|                                  | 100是速度（0~255）），当PWM值为0 |
+|                                  | 时停止转动。                     |
++----------------------------------+----------------------------------+
+| mecanumCar.Motor_Upper_R(0, 100) | 智能                             |
+|                                  | 车的右前方电机以PWM100的速度反转 |
++----------------------------------+----------------------------------+
+
+.. |Img| image:: ./media/img-20230427085645.png
+.. |image1| image:: ./media/img-20230427093155.png

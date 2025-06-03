@@ -1,0 +1,175 @@
+第21课 超声波避障智能小车
+=========================
+
+|Img|
+
+.. _1实验说明:
+
+1.实验说明：
+------------
+
+在上个项目中，我们制作了一个超声波跟随智能车。实际上，利用同样的硬件，同样的接线方法，我们只需要更改一个测试代码就可以将跟随智能车变为避障智能车。超声波避障智能车，就是通过超声波传感器检测前方障碍物的距离，然后舵机云台转动检测到左右两边的距离，然后根据这一个数据控制四个电机的转动，从而控制智能车的运动状态，从而实现避障。
+我们来看看下面的程序流程图就很清晰了：
+
+.. _2实验流程图:
+
+2.实验流程图：
+--------------
+
+|image1|
+
+.. _3实验准备:
+
+3.实验准备：
+------------
+
+（1）将micro：bit主板正确插入4WD Micro:bit麦克纳姆轮智能小车。
+（2）将电池装入4WD Micro:bit麦克纳姆轮智能小车。
+（3）将电机驱动底板上的电源拨码开关拨到ON一端，开启电源。 （4）通过micro
+USB线连接micro:bit主板和电脑。 （5）打开离线版本的Mu软件。
+
+.. _4添加库文件:
+
+4.添加库文件：
+--------------
+
+添加库文件的方法请参照Python教程中第13课的文件“第13课：七彩灯闪烁.py”，也可以参照“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+.. _5实验代码:
+
+5.实验代码：
+------------
+
+库文件“keyes_mecanum_Car_V2.py”添加完后，可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。（注意！所有英文及符号均须以英文填写，最后一行必须有空格。）
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+   from keyes_mecanum_Car_V2 import *
+   mecanumCar = Mecanum_Car_Driver_V2()
+   distance_val = 0
+   distance_l = 0
+   distance_r = 0
+   class Servo:
+       def __init__(self, pin, freq=50, min_us=600, max_us=2400, angle=180):
+           self.min_us = min_us
+           self.max_us = max_us
+           self.us = 0
+           self.freq = freq
+           self.angle = angle
+           self.analog_period = 0
+           self.pin = pin
+           analog_period = round((1/self.freq) * 1000)  # hertz to miliseconds
+           self.pin.set_analog_period(analog_period)
+
+       def write_us(self, us):
+           us = min(self.max_us, max(self.min_us, us))
+           duty = round(us * 1024 * self.freq // 1000000)
+           self.pin.write_analog(duty)
+           sleep(100)
+           self.pin.write_analog(0)
+
+       def write_angle(self, degrees=None):
+           if degrees is None:
+               degrees = math.degrees(radians)
+           degrees = degrees % 360
+           total_range = self.max_us - self.min_us
+           us = self.min_us + total_range * degrees // self.angle
+           self.write_us(us)
+
+   Servo(pin14).write_angle(90)
+
+   while True:
+
+       distance_val = mecanumCar.get_distance()
+
+       if distance_val < 20:
+           mecanumCar.Motor_Upper_L(0, 0)
+           mecanumCar.Motor_Lower_L(0, 0)
+           mecanumCar.Motor_Upper_R(0, 0)
+           mecanumCar.Motor_Lower_R(0, 0)
+           sleep(500)
+           Servo(pin14).write_angle(180)
+           sleep(500)
+           distance_l = mecanumCar.get_distance()
+           sleep(500)
+
+           Servo(pin14).write_angle(0)
+           sleep(500)
+           distance_r = mecanumCar.get_distance()
+           sleep(500)
+
+           if distance_l > distance_r:
+               mecanumCar.Motor_Upper_L(0, 100)
+               mecanumCar.Motor_Lower_L(0, 100)
+               mecanumCar.Motor_Upper_R(1, 100)
+               mecanumCar.Motor_Lower_R(1, 100)
+               Servo(pin14).write_angle(90)
+               sleep(300)
+           else:
+               mecanumCar.Motor_Upper_L(1, 100)
+               mecanumCar.Motor_Lower_L(1, 100)
+               mecanumCar.Motor_Upper_R(0, 100)
+               mecanumCar.Motor_Lower_R(0, 100)
+               Servo(pin14).write_angle(90)
+               sleep(300)
+
+       else:
+           mecanumCar.Motor_Upper_L(1, 100)
+           mecanumCar.Motor_Lower_L(1, 100)
+           mecanumCar.Motor_Upper_R(1, 100)
+           mecanumCar.Motor_Lower_R(1, 100)
+
+.. _6实验结果:
+
+6.实验结果：
+------------
+
+确定已经将电机驱动底板上的电源拨码开关拨到ON一端，点击“\ **刷入**\ ”将代码下载到micro：bit主板。这样，麦克纳姆轮智能车在离前方障碍物的距离大于20cm时，麦克纳姆轮智能车向前走，反之，麦克纳姆轮智能车上搭载超声波的舵机云台，将向左转，检测左边的距离，再向右转，检测右边的距离，然后判断左右两边的距离，哪边距离大就往哪边走。
+
+.. _7代码说明:
+
+7.代码说明：
+------------
+
++----------------------------------+----------------------------------+
+| from microbit import \*          | 导入microbit的库文件             |
++==================================+==================================+
+| from keyes_mecanum_Car_V2 import | 导入keyes_mecanum_Car_V2的库文件 |
+| \*                               |                                  |
++----------------------------------+----------------------------------+
+| mecanumCar =                     | 实例化一个对象Mec                |
+| Mecanum_Car_Driver_V2()          | anum_Car_Driver_V2()为mecanumCar |
++----------------------------------+----------------------------------+
+| distance_val = 0                 | 设置变量distance_val初始值为0    |
++----------------------------------+----------------------------------+
+| distance_l = 0                   | 设置变量distance_l初始值为0      |
++----------------------------------+----------------------------------+
+| distance_r = 0                   | 设置变量distance_r初始值为0      |
++----------------------------------+----------------------------------+
+| Servo(pin14).write_angle(90)     | 舵机连接P14，转动角度为90度      |
++----------------------------------+----------------------------------+
+| while True:                      | 这是一个永久循环，它使mi         |
+|                                  | cro：bit永远执行这个循环中的代码 |
++----------------------------------+----------------------------------+
+| if distance_val < 20:            | 如果distance_val <20成立时       |
++----------------------------------+----------------------------------+
+| mecanumCar.Motor_Upper_L(0, 0)   | 智能车的左前电机停止转动         |
++----------------------------------+----------------------------------+
+| distance_val =                   | 将mecanumCar.get_                |
+| mecanumCar.get_distance()        | distance()赋给于变量distance_val |
++----------------------------------+----------------------------------+
+| if distance_l > distance_r:      | 如果distance_l > distance_r      |
+|                                  | 条件成立                         |
++----------------------------------+----------------------------------+
+| mecanumCar.Motor_Upper_L(1, 100) | 智能车的左前电机以PWM100正转     |
++----------------------------------+----------------------------------+
+| mecanumCar.Motor_Lower_R(0, 100) | 智能车的右后电机以PWM100反转     |
++----------------------------------+----------------------------------+
+
+.. |Img| image:: ./media/img-20230427092934.png
+.. |image1| image:: ./media/img-20230427093132.png

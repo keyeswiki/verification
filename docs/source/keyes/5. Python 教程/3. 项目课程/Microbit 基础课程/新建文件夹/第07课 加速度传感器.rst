@@ -1,0 +1,148 @@
+第07课 加速度传感器
+===================
+
+|Img|
+
+.. _1实验说明:
+
+1.实验说明：
+------------
+
+Micro:bit V2主板内置有LSM303AGR
+重力加速度传感器（加速度计），其具有8/10/12
+bits的分辨率，程序可设置量程为1g、2g、4g,、8g。
+我们常使用加速度计来检测机器的姿态。
+在本实验项目中，将介绍加速度传感器（加速度计）对几个特殊姿态的检测，之后来查看加速度传感器输出的三轴原始数据。
+
+.. _2-准备:
+
+2. 准备：
+---------
+
+（1）通过Micro USB线连接Micro:bit主板和电脑。 |image1|
+
+（2）打开离线版本的Mu软件。
+
+.. _3-课程代码1:
+
+3. 课程代码1：
+--------------
+
+对Micro:bit不同的操作，LED点阵显示对应的数字。
+
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+
+   while True:
+       gesture = accelerometer.current_gesture()
+
+       if gesture == "shake":
+           display.show("1")
+       if gesture == "up":
+           display.show("2")
+       if gesture == "down":
+           display.show("3")
+       if gesture == "face up":
+           display.show("4")
+       if gesture == "face down":
+           display.show("5")
+       if gesture == "left":
+           display.show("6")
+       if gesture == "right":
+           display.show("7")
+       if gesture == "freefall":
+           display.show("8")
+
+.. _4实验结果1:
+
+4.实验结果1:
+------------
+
+按照之前的方式将程序1下载到Micro:bit主板，利用Micro
+USB数据线上电，将Micro:bit主板晃动，则可见Micro:bit显示数字1（表明只要有晃动，无论朝哪个方向晃动，该条件都将满足）。
+
+当Micro:bit主板的Logo朝上时，LED点阵显示数字2，Logo朝上示意图如下所示：
+|image2|
+
+同理，Micro:bit主板的Logo朝上时，LED点阵显示数字3(倒立的3)，Logo朝下示意图如下所示：
+|image3|
+
+当屏幕朝上（指的是LED点阵朝上）时，LED点阵显示数字4。如下图所示：
+|image4|
+
+同理，当屏幕朝下（指的是LED点阵朝下）时，LED点阵显示数字5。
+
+当Micro:bit
+主板向左倾斜（是指LED点阵先朝上，然后再往左边倾斜）时，LED点阵显示数字6。如下图所示：
+|image5|
+
+同理，当Micro:bit主板向右倾斜（是指LED点阵先朝上，然后再往右边倾斜）时，LED点阵显示数字7。如下图所示：
+|image6|
+
+当不小心碰到Micro:bit主板使其从桌面掉落，则为做自由落体运动，此时，Micro:bit主板满足自由落体的条件，则LED点阵显示数字8。（注意：此方法操作时，很容易把micro:bit主板摔坏，不建议操作）
+注意：（3g、6g、8g，
+如果需要满足此条件，则需要达到3倍，6倍，8倍重力加速度甩动Micro:bit主板。如果你们有兴趣的话，这部分程序可以自己添加）
+
+.. _5实验程序2:
+
+5.实验程序2：
+-------------
+
+检测加速度在X轴，Y轴，Z轴的不同的值
+
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+
+   while True:
+
+       x = accelerometer.get_x()
+
+       y = accelerometer.get_y()
+
+       z = accelerometer.get_z()
+
+       print("x, y, z:", x, y, z)
+
+       sleep(100)
+
+.. _6-实验结果2:
+
+6. 实验结果2：
+--------------
+
+按照之前的方式将代码2成功下载到Micro:bit之后，Micro
+USB数据线不要拔下来，利用Micro
+USB数据线上电。先点击“REPL”按钮，再按一下Micro:bit后面的复位按钮，这样，BBC
+microbit
+REPL窗口打印并显示了Micro:bit的加速度在X轴、Y轴、Z轴的分解，可得数据变化如下图：
+|image7|
+
+.. _7-代码解释:
+
+7. 代码解释：
+-------------
+
+|image8| |image9|
+
+.. |Img| image:: ./media/img-20230324161826.png
+.. |image1| image:: ./media/img-20230327154148.png
+.. |image2| image:: ./media/img-20230324162218.png
+.. |image3| image:: ./media/img-20230324162231.png
+.. |image4| image:: ./media/img-20230324162247.png
+.. |image5| image:: ./media/img-20230324162345.png
+.. |image6| image:: ./media/img-20230324162407.png
+.. |image7| image:: ./media/img-20230327170326.png
+.. |image8| image:: ./media/img-20230327170455.png
+.. |image9| image:: ./media/img-20230327170549.png

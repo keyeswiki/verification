@@ -1,0 +1,98 @@
+第11课 麦克风
+=============
+
+|Img| |image1|
+
+.. _1实验说明:
+
+1.实验说明：
+------------
+
+Micro:bit
+主板有一个内置麦克风，可以测量环境的声音程度。你可以使用它作为一个简单的输入---当你鼓掌时，Micro:bit主板上前面内置麦克风LED指示灯会被打开。它还可以测量声音的强度，所以你可以制作一个噪音等级表或与音乐合拍的迪斯科灯光。麦克风是在Micro:bit
+主板的背面，而在前面，你会发现一个内置麦克风LED指示灯，还有紧挨着让声音进入麦克风的孔。当你Micro:bit主板在测量声音级别时，它就会亮起来。
+
+.. _3-课程代码1:
+
+3. 课程代码1：
+--------------
+
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+
+   while True:
+       if microphone.current_event() == SoundEvent.LOUD:
+           display.show(Image.HEART)
+           sleep(200)
+       if microphone.current_event() == SoundEvent.QUIET:
+           display.show(Image.HEART_SMALL)
+
+.. _4-实验结果1:
+
+4. 实验结果1：
+--------------
+
+按照之前的方式将代码1下载到Micro：bit主板，Micro
+USB数据线不要拔下来，并且利用Micro USB数据线上电。当你鼓掌时，Micro:bit
+主板上的LED点阵显示“❤”图案；当外界环境安静时，Micro:bit
+主板上的LED点阵显示“\ |image2|\ ”图案。
+
+.. _5-课程代码2:
+
+5. 课程代码2：
+--------------
+
+可以直接在Mu编译器上传教程中的代码，也可以手动在Mu编译器编写代码。
+
+添加代码到Mu编译器的教程与下载代码的教程请阅读“开发环境设置”文件夹中的文件“Mu
+Editor 编译器教程”。
+
+::
+
+   from microbit import *
+   maxSound = 0
+   lights = Image("11111:"
+                 "11111:"
+                 "11111:"
+                 "11111:"
+                 "11111")
+   # ignore first sound level reading
+   soundLevel = microphone.sound_level()
+   sleep(200)
+
+   while True:
+       if button_a.is_pressed():
+           display.scroll(maxSound)
+       else:
+           soundLevel = microphone.sound_level()
+           display.show(lights * soundLevel)
+           if soundLevel > maxSound:
+               maxSound = soundLevel
+
+.. _6-实验结果2:
+
+6. 实验结果2：
+--------------
+
+按照之前的方式将代码2下载到Micro：bit主板，Micro
+USB数据线不要拔下来，利用Micro
+USB数据线上电，并且，当你按下Micro:bit主板上的A键时，Micro:bit主板上的LED点阵显示检测到的此时环境中最大声音级别值（这里需要注意：通过按Micro:bit背面的重置按钮重置最大值。）；当鼓掌时，测量的声音越大，LED点阵屏的25个LED就越亮。
+
+.. _7-代码解释:
+
+7. 代码解释：
+-------------
+
+|image3| |image4|
+
+.. |Img| image:: ./media/img-20230324172906.png
+.. |image1| image:: ./media/img-20230324172909.png
+.. |image2| image:: ./media/img-20230328084104.png
+.. |image3| image:: ./media/img-20230328084329.png
+.. |image4| image:: ./media/img-20230328084418.png
